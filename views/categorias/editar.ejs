@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Editar Categoria</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <h1>Editar Categoria</h1>
+
+  <% if (typeof erro !== 'undefined') { %>
+    <p style="color: red;"><%= erro %></p>
+  <% } %>
+
+  <form method="POST">
+    <div>
+      <label>Nome:</label>
+      <input type="text" name="nome" required value="<%= categoria.nome %>">
+    </div>
+
+    <div>
+      <label>Descrição:</label>
+      <textarea name="descricao"><%= categoria.descricao || '' %></textarea>
+    </div>
+
+    <button type="submit">Atualizar</button>
+  </form>
+  <br>
+  <a href="/categorias">Cancelar</a>
+</body>
+</html>

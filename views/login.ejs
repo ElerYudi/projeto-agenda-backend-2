@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <h1>Login</h1>
+  <p>Bem-vindo à sua Agenda. Por favor, faça o login.</p>
+
+  <% if (typeof erro !== 'undefined') { %>
+    <p style="color: red;"><%= erro %></p>
+  <% } %>
+
+  <form action="/login" method="POST">
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" required>
+    </div>
+    <button type="submit">Entrar</button>
+  </form>
+  <br>
+  <a href="/usuarios/cadastrar">Não tem uma conta? Cadastre-se</a>
+</body>
+</html>

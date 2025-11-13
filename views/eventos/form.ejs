@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head><title><%= titulo %></title></head>
+<body>
+  <h1><%= titulo %></h1>
+
+  <% if (typeof erro !== 'undefined') { %>
+    <p style="color: red;"><%= erro %></p>
+  <% } %>
+
+  <form method="POST">
+    <div>
+      <label>Título:</label>
+      <input type="text" name="titulo" required>
+    </div>
+    <div>
+      <label>Início:</label>
+      <input type="datetime-local" name="dataInicio" required>
+    </div>
+    <div>
+      <label>Fim:</label>
+      <input type="datetime-local" name="dataFim" required>
+    </div>
+    <div>
+      <label>Categoria:</label>
+      <select name="categoriaId" required>
+        <option value="">Selecione...</option>
+        <% categorias.forEach(function(cat) { %>
+          <option value="<%= cat._id %>"><%= cat.nome %></option>
+        <% }); %>
+      </select>
+    </div>
+    <div>
+      <label>Local:</label>
+      <input type="text" name="local">
+    </div>
+    <div>
+      <label>Descrição:</label>
+      <textarea name="descricao"></textarea>
+    </div>
+    <button type="submit">Salvar</button>
+  </form>
+</body>
+</html>

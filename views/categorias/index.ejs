@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Minhas Categorias</title></head>
+<body>
+  <h1>Minhas Categorias</h1>
+  <a href="/categorias/nova">Criar Nova Categoria</a>
+  <ul>
+    <% categorias.forEach(function(categoria) { %>
+      <li>
+        <%= categoria.nome %>
+        | 
+        <a href="/categorias/editar/<%= categoria._id %>">Editar</a> |
+        <a href="/categorias/deletar/<%= categoria._id %>" onclick="return confirm('Tem certeza que deseja deletar esta categoria?');">Deletar</a>
+      </li>
+    <% }) %> </ul>
+  <a href="/dashboard">Voltar ao Dashboard</a>
+</body>
+</html>

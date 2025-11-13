@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Meus Eventos</title></head>
+<body>
+  <h1>Meus Eventos</h1>
+  <a href="/eventos/novo">Criar Novo Evento</a>
+  <ul>
+            <% eventos.forEach(function(evento) { %>
+              <li>
+                <strong><%= evento.titulo %></strong><br>
+                Início: <%= evento.dataInicio.toLocaleString() %><br>
+                Fim: <%= evento.dataFim.toLocaleString() %><br>
+                <a href="/eventos/editar/<%= evento._id %>">Editar</a> |
+                <a href="/eventos/deletar/<%= evento._id %>" onclick="return confirm('Tem certeza que deseja deletar este evento?');">Deletar</a>
+              </li>
+            <% }); %>
+  <a href="/dashboard">Voltar ao Dashboard</a>
+</body>
+</html>
