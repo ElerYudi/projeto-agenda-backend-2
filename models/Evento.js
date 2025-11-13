@@ -46,6 +46,23 @@ class Evento {
         }
     }
 
+    static async buscarPorUsuarioFiltro(usuarioId, categoriaId) {
+        try {
+            const db = getDb();
+            const filtro = { usuarioId: new ObjectId(usuarioId) };
+
+            if (categoriaId && categoriaId !== 'todos') {
+                filtro.categoriaId = new ObjectId(categoriaId);
+            }
+
+            return await db.collection('eventos').find(filtro).toArray();
+            
+        } catch (error) {
+            logError(error);
+            throw new Error("Ocorreu um erro ao buscar eventos por usuário.");
+        }
+    }
+    
     static async buscarPorId(id) {
         try {
             const db = getDb();

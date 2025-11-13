@@ -4,16 +4,44 @@
 <body>
   <h1>Meus Eventos</h1>
   <a href="/eventos/novo">Criar Novo Evento</a>
+
+  <hr>
+  <form action="/eventos" method="GET">
+    <label for="categoria">Filtrar por Categoria:</label>
+    <select name="categoria" id="categoria">
+      <option value="todos" 
+        <%= (categoriaSelecionada === 'todos') ? 'selected' : '' %>>
+        Todas as Categorias
+      </option>
+      
+      <% categorias.forEach(function(cat) { %>
+        <option 
+          value="<%= cat._id %>"
+          <%= (categoriaSelecionada == cat._id) ? 'selected' : '' %>>
+          <%= cat.nome %>
+        </option>
+      <% }); %>
+    </select>
+    <button type="submit">Filtrar</button>
+    <a href="/eventos">Limpar Filtro</a>
+  </form>
+  <hr>
+
   <ul>
-            <% eventos.forEach(function(evento) { %>
-              <li>
-                <strong><%= evento.titulo %></strong><br>
-                Início: <%= evento.dataInicio.toLocaleString() %><br>
-                Fim: <%= evento.dataFim.toLocaleString() %><br>
-                <a href="/eventos/editar/<%= evento._id %>">Editar</a> |
-                <a href="/eventos/deletar/<%= evento._id %>" onclick="return confirm('Tem certeza que deseja deletar este evento?');">Deletar</a>
-              </li>
-            <% }); %>
+    <% eventos.forEach(function(evento) { %>
+      <li>
+        <strong><%= evento.titulo %></strong><br>
+        Início: <%= evento.dataInicio.toLocaleString() %><br>
+        Fim: <%= evento.dataFim.toLocaleString() %><br>
+        <a href="/eventos/editar/<%= evento._id %>">Editar</a> |
+        <a href="/eventos/deletar/<%= evento._id %>" onclick="return confirm('Tem certeza que deseja deletar este evento?');">Deletar</a>
+      </li>
+    <% }); %>
+
+    <% if (eventos.length === 0) { %>
+      <p>Nenhum evento encontrado para esta categoria.</p>
+    <% } %>
+  </ul>
   <a href="/dashboard">Voltar ao Dashboard</a>
 </body>
 </html>

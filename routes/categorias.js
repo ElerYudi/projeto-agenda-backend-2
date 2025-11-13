@@ -1,34 +1,27 @@
-// routes/categorias.js
 const express = require('express');
 const router = express.Router();
 const Categoria = require('../models/Categoria');
 const { requireLogin } = require('../middleware/auth.js');
 
-// Proteger TODAS as rotas de categoria com o login
 router.use(requireLogin);
 
-/* GET - Listar todas as categorias */
 router.get('/', async (req, res, next) => {
   try {
-    const categorias = await Categoria.buscarTodos();
+    const categorias = await Categoria.buscarPorUsuario(req.session.userId);
     res.render('categorias/index', { categorias: categorias });
   } catch (error) {
     next(error);
   }
 });
 
-/* GET - Formulário para nova categoria */
 router.get('/nova', (req, res, next) => {
   res.render('categorias/form', { titulo: 'Nova Categoria' });
 });
 
-/* POST - Salvar nova categoria */
 router.post('/nova', async (req, res, next) => {
-  // 1. Removido "cor" daqui
   const { nome, descricao } = req.body;
   try {
-    // 2. Removido "cor" daqui
-    const novaCategoria = new Categoria(nome, descricao);
+    const novaCategoria = new Categoria(nome, req.session.userId, descricao);
     await novaCategoria.salvar();
     res.redirect('/categorias');
   } catch (error) {
@@ -39,14 +32,13 @@ router.post('/nova', async (req, res, next) => {
   }
 });
 
-/* GET - Formulário para EDITAR categoria */
 router.get('/editar/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
     const categoria = await Categoria.buscarPorId(id);
 
-    if (!categoria) {
-      return res.status(404).send('Categoria não encontrada');
+    if (!categoria || !categoria.usuarioId.equals(req.session.userId)) {
+      return res.status(403).send('Acesso negado');
     }
 
     res.render('categorias/editar', { categoria: categoria });
@@ -55,14 +47,18 @@ router.get('/editar/:id', async (req, res, next) => {
   }
 });
 
-/* POST - Processar a ATUALIZAÇÃO da categoria */
+
 router.post('/editar/:id', async (req, res, next) => {
   const id = req.params.id;
-  // 3. Removido "cor" daqui
   const { nome, descricao } = req.body;
-  const novosDados = { nome, descricao }; // E daqui
+  const novosDados = { nome, descricao };
 
   try {
+    const categoriaExistente = await Categoria.buscarPorId(id);
+    if (!categoriaExistente || !categoriaExistente.usuarioId.equals(req.session.userId)) {
+      return res.status(403).send('Acesso negado');
+    }
+
     await Categoria.atualizarPorId(id, novosDados);
     res.redirect('/categorias');
   } catch (error) {
@@ -74,10 +70,16 @@ router.post('/editar/:id', async (req, res, next) => {
   }
 });
 
-/* GET - Deletar categoria */
+
 router.get('/deletar/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
+    const categoriaExistente = await Categoria.buscarPorId(id);
+
+    if (!categoriaExistente || !categoriaExistente.usuarioId.equals(req.session.userId)) {
+      return res.status(403).send('Acesso negado');
+    }
+
     await Categoria.deletarPorId(id);
     res.redirect('/categorias');
   } catch (error) {

@@ -1,0 +1,10 @@
+2025-11-13T21:49:48.769Z - ERRO: Error: Já existe uma categoria com este nome.
+    at Categoria.salvar (C:\Projeto\agenda-web\models\Categoria.js:28:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Projeto\agenda-web\routes\categorias.js:32:5
+
+2025-11-13T21:50:38.398Z - ERRO: Error: Já existe uma categoria com este nome.
+    at Categoria.salvar (C:\Projeto\agenda-web\models\Categoria.js:28:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Projeto\agenda-web\routes\categorias.js:32:5
+
