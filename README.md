@@ -68,7 +68,7 @@ Opcionalmente, instale o [MongoDB Compass](https://www.mongodb.com/products/comp
 
 1.  *Clone o repositório:*
     bash
-    git clone [https://github.com/ElerYudi/agenda-web.git] (https://github.com/ElerYudi/projeto-agenda-backend-2)
+    git clone (https://github.com/ElerYudi/projeto-agenda-backend-2)
     
 
 2.  *Acesse a pasta do projeto:*
